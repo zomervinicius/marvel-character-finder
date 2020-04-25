@@ -8,6 +8,7 @@
     "node": true
   },
   "rules": {
+    "react/prop-types": 0,
     "jsx-a11y/href-no-hash": ["off"],
     "comma-dangle": ["error", "never"],
     "no-param-reassign": 0,
@@ -28,5 +29,12 @@
         "ignoreRegExpLiterals": true
       }
     ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
   }
 }
