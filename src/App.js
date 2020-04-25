@@ -1,7 +1,12 @@
 import React from 'react'
+import MarvelCharacters from './features/marvelCharacters'
 
 function App() {
-  return <div className="App">test</div>
+  return (
+    <div>
+      <MarvelCharacters />
+    </div>
+  )
 }
 
 export default App
