@@ -7,6 +7,7 @@ import React from 'react'
 import Character from './Character'
 import Footer from './Footer'
 import Header from './Header'
+import SearchBox from './SearchBox'
 
 const updatedTheme = createMuiTheme({
   palette: {
@@ -36,6 +37,7 @@ export default function Index() {
         <Header />
         <main>
           <Container className={classes.cardGrid} maxWidth="xl">
+            <SearchBox />
             {/* End hero unit */}
             <Grid container spacing={4}>
               {cards.map((card) => (
