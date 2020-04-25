@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function Character({ card }) {
+export default function CharacterCard({ card }) {
   const classes = useStyles()
   return (
     <Grid item key={card} xs={12} sm={6} md={4}>

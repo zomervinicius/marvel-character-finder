@@ -1,11 +1,22 @@
 import React from 'react'
-import MarvelCharacters from './features/marvelCharacters'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import MarvelCharacters from './features/marvelCharacters/pages'
+import CharacterDetail from './features/marvelCharacters/pages/CharacterDetail'
 
 function App() {
   return (
-    <div>
-      <MarvelCharacters />
-    </div>
+    <>
+      <Router>
+        <Switch>
+          <Route path="/detail">
+            <CharacterDetail />
+          </Route>
+          <Route path="/">
+            <MarvelCharacters />
+          </Route>
+        </Switch>
+      </Router>
+    </>
   )
 }
 

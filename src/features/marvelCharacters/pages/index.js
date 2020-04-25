@@ -4,10 +4,10 @@ import Grid from '@material-ui/core/Grid'
 import { createMuiTheme, makeStyles } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import React from 'react'
-import Character from './Character'
-import Footer from './Footer'
-import Header from './Header'
-import SearchBox from './SearchBox'
+import CharacterCard from '../components/CharacterCard'
+import Footer from '../components/Footer'
+import Header from '../components/Header'
+import SearchBox from '../components/SearchBox'
 
 const updatedTheme = createMuiTheme({
   palette: {
@@ -41,7 +41,7 @@ export default function Index() {
             {/* End hero unit */}
             <Grid container spacing={4}>
               {cards.map((card) => (
-                <Character card={card} />
+                <CharacterCard card={card} />
               ))}
             </Grid>
           </Container>
