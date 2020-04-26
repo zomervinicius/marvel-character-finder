@@ -33,7 +33,7 @@ export default function CharacterCard({ card }) {
         <CardMedia
           className={classes.cardMedia}
           image={`${card.thumbnail.path}.${card.thumbnail.extension}`}
-          title="Image title"
+          title="marvel-char-img"
         />
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom variant="h5" component="h2">
