@@ -4,6 +4,7 @@ import { createMuiTheme, makeStyles } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import React from 'react'
 import Characters from '../components/Characters'
+import Footer from '../components/Footer'
 import Header from '../components/Header'
 import SearchBox from '../components/SearchBox'
 
@@ -38,9 +39,8 @@ export default function Index() {
             <Characters />
           </Container>
         </main>
-        {/*
+
         <Footer />
-        */}
       </ThemeProvider>
     </>
   )
