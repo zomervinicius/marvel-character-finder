@@ -5,7 +5,7 @@ import React from 'react'
 
 const useStyles = makeStyles((theme) => ({
   errorContent: {
-    marginTop: '3%',
+    marginTop: theme.spacing(6),
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
