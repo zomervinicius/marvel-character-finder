@@ -5,7 +5,7 @@ import React from 'react'
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: '#fafafa',
     padding: theme.spacing(6)
   }
 }))

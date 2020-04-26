@@ -1,15 +1,20 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { GET_CHARACTERS_API_URL } from '../services/index'
 
-export const fetchCharactersByOffset = createAsyncThunk(
+export const fetchCharactersByParams = createAsyncThunk(
   'users/fetchByIdStatus',
-  async (offset, { getState, requestId }) => {
+  async (params = { page: 1 }, { getState, requestId }) => {
     const { currentRequestId, loading } = getState().characters
     if (loading !== 'pending' || requestId !== currentRequestId) {
       return
     }
+    const { page = 1, nameStartsWith } = params
+
+    const offset = 20 * page - 20
     const response = await fetch(
-      `${GET_CHARACTERS_API_URL}&offset=${offset}&limit=20`
+      `${GET_CHARACTERS_API_URL}&limit=20&offset=${offset}${
+        nameStartsWith ? `&nameStartsWith=${nameStartsWith}` : ''
+      }`
     )
     const json = await response.json()
     return json
@@ -26,13 +31,13 @@ export const charactersSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [fetchCharactersByOffset.pending]: (state, action) => {
+    [fetchCharactersByParams.pending]: (state, action) => {
       if (state.loading === 'idle') {
         state.loading = 'pending'
         state.currentRequestId = action.meta.requestId
       }
     },
-    [fetchCharactersByOffset.fulfilled]: (state, action) => {
+    [fetchCharactersByParams.fulfilled]: (state, action) => {
       const { requestId } = action.meta
       if (state.loading === 'pending' && state.currentRequestId === requestId) {
         state.loading = 'idle'
@@ -40,7 +45,7 @@ export const charactersSlice = createSlice({
         state.currentRequestId = undefined
       }
     },
-    [fetchCharactersByOffset.rejected]: (state, action) => {
+    [fetchCharactersByParams.rejected]: (state, action) => {
       const { requestId } = action.meta
       if (state.loading === 'pending' && state.currentRequestId === requestId) {
         state.loading = 'idle'

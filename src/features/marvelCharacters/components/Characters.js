@@ -1,13 +1,16 @@
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 import Pagination from '@material-ui/lab/Pagination'
+import apiErrorImage from 'assets/images/marvel-api-error.jpg'
+import marvelCharNotFound from 'assets/images/marvel-char-not-found.jpg'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  fetchCharactersByOffset,
+  fetchCharactersByParams,
   selectCharacters
 } from '../slices/CharactersSlice'
 import { changePage, selectPagination } from '../slices/PaginationSlice'
+import { selectSearch } from '../slices/SearchSlice'
 import { isObjEmpty } from '../utilities'
 import CharacterCard from './CharacterCard'
 import { CharactersError } from './CharactersError'
@@ -16,10 +19,11 @@ import CharacterSkeleton from './CharacterSkeleton'
 export default function Characters() {
   const dispatch = useDispatch()
   const { entities: characters, loading, error } = useSelector(selectCharacters)
+  const { search } = useSelector(selectSearch)
   const { page } = useSelector(selectPagination)
   useEffect(() => {
     const getCharacters = () => {
-      dispatch(fetchCharactersByOffset(0))
+      dispatch(fetchCharactersByParams())
     }
     getCharacters()
   }, [])
@@ -39,7 +43,20 @@ export default function Characters() {
   }
 
   if (error) {
-    return <CharactersError />
+    return (
+      <CharactersError
+        errorMessage="Não foi possível buscar os personagens, tente novamente mais tarde!"
+        img={apiErrorImage}
+      />
+    )
+  }
+  if (!isObjEmpty(characters) && characters.results.length === 0) {
+    return (
+      <CharactersError
+        errorMessage="Não foi encontrado nenhum personagem, tente refazer a pesquisa!"
+        img={marvelCharNotFound}
+      />
+    )
   }
   if (!isObjEmpty(characters)) {
     return (
@@ -51,13 +68,17 @@ export default function Characters() {
         </Grid>
         <div className={classes.pagination}>
           <Pagination
-            count={Math.round(characters.total / characters.count)}
+            count={Math.round(characters.total / characters.limit)}
             color="secondary"
-            // variant="outlined"
             shape="rounded"
-            onChange={(e, page) => {
-              dispatch(changePage(page))
-              dispatch(fetchCharactersByOffset(20 * page - 20))
+            onChange={(e, pageToChange) => {
+              dispatch(changePage(pageToChange))
+              dispatch(
+                fetchCharactersByParams({
+                  page: pageToChange,
+                  nameStartsWith: search
+                })
+              )
             }}
             page={page}
           />

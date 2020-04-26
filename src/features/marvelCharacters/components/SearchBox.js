@@ -1,5 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useDebounce } from 'use-debounce'
+import { fetchCharactersByParams } from '../slices/CharactersSlice'
+import { selectSearch, setSearchValue } from '../slices/SearchSlice'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,15 +52,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchBox() {
   const classes = useStyles()
-
+  const { search } = useSelector(selectSearch)
+  const dispatch = useDispatch()
+  const [debouncedSearch] = useDebounce(search, 400)
+  useEffect(() => {
+    dispatch(
+      fetchCharactersByParams({
+        nameStartsWith: search
+      })
+    )
+  }, [debouncedSearch])
   return (
     <div className={classes.root}>
       <input
         type="search"
-        defaultValue=""
+        value={search}
         className={classes.input}
         placeholder="Search the character..."
-        onChange={(e) => console.log(e.target.value)}
+        onChange={(e) => dispatch(setSearchValue(e.target.value))}
       />
     </div>
   )
