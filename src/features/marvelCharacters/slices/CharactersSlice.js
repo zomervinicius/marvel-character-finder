@@ -1,14 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { GET_CHARACTERS_API_URL } from '../services/index'
 
-export const fetchCharactersByName = createAsyncThunk(
+export const fetchCharactersByOffset = createAsyncThunk(
   'users/fetchByIdStatus',
-  async (userId, { getState, requestId }) => {
+  async (offset, { getState, requestId }) => {
     const { currentRequestId, loading } = getState().characters
     if (loading !== 'pending' || requestId !== currentRequestId) {
       return
     }
-    const response = await fetch(GET_CHARACTERS_API_URL)
+    const response = await fetch(
+      `${GET_CHARACTERS_API_URL}&offset=${offset}&limit=20`
+    )
     const json = await response.json()
     return json
   }
@@ -17,30 +19,31 @@ export const fetchCharactersByName = createAsyncThunk(
 export const charactersSlice = createSlice({
   name: 'characters',
   initialState: {
-    entities: [],
+    entities: {},
     loading: 'idle',
     currentRequestId: undefined,
     error: null
   },
   reducers: {},
   extraReducers: {
-    [fetchCharactersByName.pending]: (state, action) => {
+    [fetchCharactersByOffset.pending]: (state, action) => {
       if (state.loading === 'idle') {
         state.loading = 'pending'
         state.currentRequestId = action.meta.requestId
       }
     },
-    [fetchCharactersByName.fulfilled]: (state, action) => {
+    [fetchCharactersByOffset.fulfilled]: (state, action) => {
       const { requestId } = action.meta
       if (state.loading === 'pending' && state.currentRequestId === requestId) {
         state.loading = 'idle'
-        state.entities.push(action.payload.data)
+        state.entities = action.payload.data
         state.currentRequestId = undefined
       }
     },
-    [fetchCharactersByName.rejected]: (state, action) => {
+    [fetchCharactersByOffset.rejected]: (state, action) => {
       const { requestId } = action.meta
       if (state.loading === 'pending' && state.currentRequestId === requestId) {
+        state.loading = 'idle'
         state.loading = 'idle'
         state.error = action.error
         state.currentRequestId = undefined
