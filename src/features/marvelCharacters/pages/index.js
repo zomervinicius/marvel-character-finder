@@ -39,7 +39,6 @@ export default function Index() {
             <Characters />
           </Container>
         </main>
-
         <Footer />
       </ThemeProvider>
     </>
