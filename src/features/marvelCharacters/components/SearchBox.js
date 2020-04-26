@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '30px'
   },
   input: {
+    [theme.breakpoints.down('sm')]: {
+      width: '100%'
+    },
     width: '50%',
     minWidth: '222px',
     padding: '12px 24px',
@@ -52,7 +55,7 @@ export default function SearchBox() {
         type="search"
         defaultValue=""
         className={classes.input}
-        placeholder="Search the hero..."
+        placeholder="Search the character..."
         onChange={(e) => console.log(e.target.value)}
       />
     </div>
