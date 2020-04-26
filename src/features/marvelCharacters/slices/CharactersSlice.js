@@ -3,7 +3,7 @@ import { GET_CHARACTERS_API_URL } from '../services/index'
 
 export const fetchCharactersByParams = createAsyncThunk(
   'users/fetchByIdStatus',
-  async (params = { page: 1 }, { getState, requestId }) => {
+  async (params, { getState, requestId }) => {
     const { currentRequestId, loading } = getState().characters
     if (loading !== 'pending' || requestId !== currentRequestId) {
       return
