@@ -61,7 +61,7 @@ export default function SearchBox() {
         nameStartsWith: search
       })
     )
-  }, [debouncedSearch])
+  }, [debouncedSearch, dispatch])
   return (
     <div className={classes.root}>
       <input

@@ -13,7 +13,7 @@ export default function Header() {
   return (
     <AppBar position="relative">
       <Toolbar>
-        <IconButton style={{ padding: 0 }} onClick={handleClick}>
+        <IconButton style={{ padding: 0 }} onClick={handleClick} disableRipple>
           <img src={marvelLogo} width={200} alt="marvel_logo" />
         </IconButton>
       </Toolbar>

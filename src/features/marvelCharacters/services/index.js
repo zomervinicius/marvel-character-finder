@@ -3,3 +3,6 @@ const hash = '415ea7ab238b621cf12ed1a4f1fc522a'
 const tsVersion = 1
 
 export const GET_CHARACTERS_API_URL = `https://gateway.marvel.com:443/v1/public/characters?apikey=${apiKey}&ts=${tsVersion}&hash=${hash}`
+
+export const GET_CHARACTER_BY_ID_API_URL = (charId) =>
+  `https://gateway.marvel.com:443/v1/public/characters/${charId}?apikey=${apiKey}&ts=${tsVersion}&hash=${hash}`

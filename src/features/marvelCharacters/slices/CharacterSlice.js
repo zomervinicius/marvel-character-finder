@@ -1,28 +1,22 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { GET_CHARACTERS_API_URL } from '../services/index'
+import { GET_CHARACTER_BY_ID_API_URL } from '../services'
 
-export const fetchCharactersByParams = createAsyncThunk(
-  'charactersByParams/fetchByIdStatus',
-  async (params, { getState, requestId }) => {
-    const { currentRequestId, loading } = getState().characters
+export const fetchCharacterById = createAsyncThunk(
+  'characterById/fetchByIdStatus',
+  async (charId, { getState, requestId }) => {
+    const { currentRequestId, loading } = getState().character
     if (loading !== 'pending' || requestId !== currentRequestId) {
       return
     }
-    const { page = 1, nameStartsWith } = params
 
-    const offset = 20 * page - 20
-    const response = await fetch(
-      `${GET_CHARACTERS_API_URL}&limit=20&offset=${offset}${
-        nameStartsWith ? `&nameStartsWith=${nameStartsWith}` : ''
-      }`
-    )
+    const response = await fetch(GET_CHARACTER_BY_ID_API_URL(charId))
     const json = await response.json()
     return json
   }
 )
 
-export const charactersSlice = createSlice({
-  name: 'characters',
+export const characterSlice = createSlice({
+  name: 'character',
   initialState: {
     entities: {},
     loading: 'idle',
@@ -31,13 +25,13 @@ export const charactersSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [fetchCharactersByParams.pending]: (state, action) => {
+    [fetchCharacterById.pending]: (state, action) => {
       if (state.loading === 'idle') {
         state.loading = 'pending'
         state.currentRequestId = action.meta.requestId
       }
     },
-    [fetchCharactersByParams.fulfilled]: (state, action) => {
+    [fetchCharacterById.fulfilled]: (state, action) => {
       const { requestId } = action.meta
       if (state.loading === 'pending' && state.currentRequestId === requestId) {
         state.loading = 'idle'
@@ -45,7 +39,7 @@ export const charactersSlice = createSlice({
         state.currentRequestId = undefined
       }
     },
-    [fetchCharactersByParams.rejected]: (state, action) => {
+    [fetchCharacterById.rejected]: (state, action) => {
       const { requestId } = action.meta
       if (state.loading === 'pending' && state.currentRequestId === requestId) {
         state.loading = 'idle'
@@ -57,6 +51,6 @@ export const charactersSlice = createSlice({
   }
 })
 
-export const selectCharacters = (state) => state.characters
+export const selectCharacter = (state) => state.character
 
-export default charactersSlice.reducer
+export default characterSlice.reducer

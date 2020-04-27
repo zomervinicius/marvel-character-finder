@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -27,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CharacterCard({ card }) {
   const classes = useStyles()
+  const history = useHistory()
+  const handleClick = (cardId) => {
+    history.push(`/detail/${cardId}`)
+  }
   return (
     <Grid item key={card} xs={12} sm={6} md={3}>
       <Card className={classes.card}>
@@ -40,7 +45,11 @@ export default function CharacterCard({ card }) {
             {card.name}
           </Typography>
           <CardActions>
-            <Button size="large" color="primary">
+            <Button
+              size="large"
+              color="primary"
+              onClick={() => handleClick(card.id)}
+            >
               Detail
             </Button>
           </CardActions>
