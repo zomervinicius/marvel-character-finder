@@ -20,7 +20,7 @@ export default function Characters() {
   if (error) {
     return (
       <CharactersError
-        errorMessage="Não foi possível buscar os personagens, tente novamente mais tarde!"
+        errorMessage="Oops, couldn't get the characters, try again later!"
         img={apiErrorImage}
       />
     )
@@ -28,7 +28,7 @@ export default function Characters() {
   if (!isObjEmpty(characters) && characters.results.length === 0) {
     return (
       <CharactersError
-        errorMessage="Não foi encontrado nenhum personagem, tente refazer a pesquisa!"
+        errorMessage="Oops, no character found, try again!"
         img={marvelCharNotFound}
       />
     )
