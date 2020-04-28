@@ -3,10 +3,12 @@ import Paper from '@material-ui/core/Paper'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Skeleton from '@material-ui/lab/Skeleton'
+import apiErrorImage from 'assets/images/marvel-api-error.jpg'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { CharacterDetailInfo } from '../components/CharacterDetailInfo'
+import { CharactersError } from '../components/CharactersError'
 import { fetchCharacterById, selectCharacter } from '../slices/CharacterSlice'
 import { isObjEmpty, scrollToTop } from '../utilities'
 
@@ -23,7 +25,6 @@ export default function CharacterDetail() {
   const theme = useTheme()
   const isExtraSmallScreen = useMediaQuery(theme.breakpoints.down('xs'))
   const { entities: character, loading, error } = useSelector(selectCharacter)
-
   const getCharacterIdInURL = () => {
     const splittedPathname = history.location.pathname.split('/detail/')
     const id = splittedPathname[1]
@@ -39,6 +40,14 @@ export default function CharacterDetail() {
     scrollToTop()
   }, [dispatch, history.location.pathname])
 
+  if (character === undefined || error) {
+    return (
+      <CharactersError
+        errorMessage="Oops, couldn't get the character, try again later!"
+        img={apiErrorImage}
+      />
+    )
+  }
   if (
     isObjEmpty(character) ||
     (String(character.results[0].id) !== getCharacterIdInURL() &&
