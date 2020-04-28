@@ -26,34 +26,36 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function CharacterCard({ card }) {
+export default function CharacterCard({ card, showContent = true }) {
   const classes = useStyles()
   const history = useHistory()
   const handleClick = (cardId) => {
     history.push(`/detail/${cardId}`)
   }
   return (
-    <Grid item key={card} xs={12} sm={6} md={3}>
+    <Grid item key={card.id} xs={12} sm={6} md={3} wrap="wrap">
       <Card className={classes.card}>
         <CardMedia
           className={classes.cardMedia}
           image={`${card.thumbnail.path}.${card.thumbnail.extension}`}
           title="marvel-char-img"
         />
-        <CardContent className={classes.cardContent}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {card.name}
-          </Typography>
-          <CardActions>
-            <Button
-              size="large"
-              color="primary"
-              onClick={() => handleClick(card.id)}
-            >
-              Detail
-            </Button>
-          </CardActions>
-        </CardContent>
+        {showContent && (
+          <CardContent className={classes.cardContent}>
+            <Typography gutterBottom variant="h5" component="h2">
+              {card.name}
+            </Typography>
+            <CardActions>
+              <Button
+                size="large"
+                color="primary"
+                onClick={() => handleClick(card.id)}
+              >
+                Detail
+              </Button>
+            </CardActions>
+          </CardContent>
+        )}
       </Card>
     </Grid>
   )
