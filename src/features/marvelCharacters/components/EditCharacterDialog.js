@@ -4,7 +4,8 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import TextField from '@material-ui/core/TextField'
-import React from 'react'
+import Alert from '@material-ui/lab/Alert'
+import React, { useState } from 'react'
 
 export function EditCharacterDialog({
   open,
@@ -13,8 +14,10 @@ export function EditCharacterDialog({
   setOpen
 }) {
   const [inputCharacterName, setInputCharacterName] = React.useState('')
+  const [showAlert, setShowAlert] = useState(false)
 
   React.useEffect(() => {
+    setShowAlert(false)
     setInputCharacterName(characterName)
   }, [characterName])
 
@@ -23,8 +26,12 @@ export function EditCharacterDialog({
   }
 
   const handleEdit = () => {
-    setCharacterName(inputCharacterName)
-    setOpen(false)
+    if (inputCharacterName.length > 0) {
+      setCharacterName(inputCharacterName)
+      setOpen(false)
+    } else {
+      setShowAlert(true)
+    }
   }
   return (
     <Dialog
@@ -34,10 +41,12 @@ export function EditCharacterDialog({
       fullWidth
     >
       <DialogTitle id="form-dialog-title">Edit character name</DialogTitle>
+      {showAlert && <Alert severity="error">The name field is required!</Alert>}
       <DialogContent>
         <TextField
           autoFocus
           margin="dense"
+          requiredlocal
           type="text"
           fullWidth
           label="Name"
