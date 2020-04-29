@@ -57,7 +57,7 @@ export function CharacterDetailSkeleton() {
         </Grid>
       )}
       <Grid item xs={12} sm={6} md={5} component={Paper} elevation={6} square>
-        {[...Array(33)].map((i) => (
+        {[...Array(32)].map((i) => (
           <Skeleton
             animation="wave"
             key={i}
