@@ -61,6 +61,7 @@ export default function SearchBox() {
         nameStartsWith: search
       })
     )
+    // eslint-disable-next-line
   }, [debouncedSearch, dispatch])
   return (
     <div className={classes.root}>

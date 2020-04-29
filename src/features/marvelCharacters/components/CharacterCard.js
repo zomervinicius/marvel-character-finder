@@ -33,7 +33,7 @@ export default function CharacterCard({ card, showContent = true }) {
     history.push(`/detail/${cardId}`)
   }
   return (
-    <Grid item key={card.id} xs={12} sm={6} md={3} wrap="wrap">
+    <Grid item key={card.id} xs={12} sm={6} md={3}>
       <Card className={classes.card}>
         <CardMedia
           className={classes.cardMedia}

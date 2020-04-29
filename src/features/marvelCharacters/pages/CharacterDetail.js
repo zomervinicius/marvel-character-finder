@@ -26,6 +26,7 @@ export default function CharacterDetail() {
     const id = getCharacterIdInURL()
     getCharacterById(id)
     scrollToTop()
+    // eslint-disable-next-line
   }, [dispatch, history.location.pathname])
 
   if (character === undefined || error) {
