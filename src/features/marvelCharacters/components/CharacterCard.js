@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   card: {
     height: '100%',
     display: 'flex',
