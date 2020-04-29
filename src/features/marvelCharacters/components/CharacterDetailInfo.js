@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { selectCharacter } from '../slices/CharacterSlice'
 import CharacterCard from './CharacterCard'
 
@@ -39,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 export function CharacterDetailInfo({ characterInfo }) {
   const classes = useStyles()
   const theme = useTheme()
+  const history = useHistory()
   const isExtraSmallScreen = useMediaQuery(theme.breakpoints.down('xs'))
   const { entities: character } = useSelector(selectCharacter)
   const [open, setOpen] = useState(false)
@@ -80,19 +82,35 @@ export function CharacterDetailInfo({ characterInfo }) {
 
         <Grid item xs={12} sm={6} md={5} component={Paper} elevation={6} square>
           <div className={classes.paper}>
-            <Button
-              color="secondary"
-              size="large"
-              variant="outlined"
-              style={{
-                marginBottom: theme.spacing(2),
-                width: isExtraSmallScreen ? '100%' : '150px',
-                float: 'left'
-              }}
-              onClick={() => handleClickOpen()}
-            >
-              Edit name
-            </Button>
+            <div style={{ display: 'flex' }}>
+              <Button
+                color="secondary"
+                size="large"
+                variant="outlined"
+                style={{
+                  marginBottom: theme.spacing(2),
+                  width: isExtraSmallScreen ? '49%' : '150px',
+                  marginRight: '2%',
+                  float: 'left'
+                }}
+                onClick={() => handleClickOpen()}
+              >
+                Edit name
+              </Button>
+              <Button
+                color="primary"
+                size="large"
+                variant="outlined"
+                style={{
+                  marginBottom: theme.spacing(2),
+                  width: isExtraSmallScreen ? '49%' : '150px',
+                  float: 'left'
+                }}
+                onClick={() => history.push('/')}
+              >
+                Go back
+              </Button>
+            </div>
             <Grid container direction={isExtraSmallScreen ? 'row' : 'column'}>
               <Typography gutterBottom variant="h4">
                 {characterName}
