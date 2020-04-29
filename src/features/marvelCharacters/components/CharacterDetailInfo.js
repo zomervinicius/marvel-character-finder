@@ -1,13 +1,8 @@
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import React, { useEffect, useState } from 'react'
@@ -15,6 +10,7 @@ import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { selectCharacter } from '../slices/CharacterSlice'
 import CharacterCard from './CharacterCard'
+import { EditCharacterDialog } from './EditCharacterDialog'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,25 +41,15 @@ export function CharacterDetailInfo({ characterInfo }) {
   const { entities: character } = useSelector(selectCharacter)
   const [open, setOpen] = useState(false)
   const [characterName, setCharacterName] = useState('')
-  const [inputCharacterName, setInputCharacterName] = useState('')
 
   useEffect(() => {
     setCharacterName(character.results[0].name)
-    setInputCharacterName(character.results[0].name)
   }, [character])
 
   const handleClickOpen = () => {
     setOpen(true)
   }
 
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  const handleEdit = () => {
-    setCharacterName(inputCharacterName)
-    setOpen(false)
-  }
   return (
     <>
       <Grid container component="main" className={classes.root}>
@@ -147,33 +133,14 @@ export function CharacterDetailInfo({ characterInfo }) {
           </div>
         </Grid>
       </Grid>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-        fullWidth
-      >
-        <DialogTitle id="form-dialog-title">Edit character name</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            type="text"
-            fullWidth
-            label="Name"
-            value={inputCharacterName}
-            onChange={(e) => setInputCharacterName(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleEdit} color="primary">
-            Edit
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <EditCharacterDialog
+        {...{
+          open,
+          characterName,
+          setCharacterName,
+          setOpen
+        }}
+      />
     </>
   )
 }
