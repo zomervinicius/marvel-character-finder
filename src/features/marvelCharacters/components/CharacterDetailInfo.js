@@ -6,9 +6,11 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { selectCharacter } from '../slices/CharacterSlice'
+import { resetPagination } from '../slices/PaginationSlice'
+import { resetSearch } from '../slices/SearchSlice'
 import CharacterCard from './CharacterCard'
 import { EditCharacterDialog } from './EditCharacterDialog'
 
@@ -37,6 +39,7 @@ export function CharacterDetailInfo({ characterInfo }) {
   const classes = useStyles()
   const theme = useTheme()
   const history = useHistory()
+  const dispatch = useDispatch()
   const isExtraSmallScreen = useMediaQuery(theme.breakpoints.down('xs'))
   const { entities: character } = useSelector(selectCharacter)
   const [open, setOpen] = useState(false)
@@ -92,7 +95,11 @@ export function CharacterDetailInfo({ characterInfo }) {
                   width: isExtraSmallScreen ? '49%' : '150px',
                   float: 'left'
                 }}
-                onClick={() => history.push('/')}
+                onClick={() => {
+                  dispatch(resetPagination())
+                  dispatch(resetSearch())
+                  history.push('/')
+                }}
               >
                 Go back
               </Button>
