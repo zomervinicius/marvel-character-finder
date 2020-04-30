@@ -44,8 +44,7 @@ const useStyles = makeStyles((theme) => ({
       outline: '0',
       border: '1px solid transparent',
       borderBottom: '1px solid white',
-      borderRadius: '0',
-      backgroundPosition: '100% center'
+      borderRadius: '0'
     }
   }
 }))
