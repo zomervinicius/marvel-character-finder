@@ -7,13 +7,11 @@ import {
   selectCharacters
 } from '../slices/CharactersSlice'
 import { changePage, selectPagination } from '../slices/PaginationSlice'
-import { selectSearch } from '../slices/SearchSlice'
 import { scrollToTop } from '../utilities'
 
 export function CharacterPagination() {
   const dispatch = useDispatch()
   const { entities: characters } = useSelector(selectCharacters)
-  const { search } = useSelector(selectSearch)
   const { page } = useSelector(selectPagination)
   const useStyles = makeStyles((theme) => ({
     pagination: {
@@ -33,12 +31,7 @@ export function CharacterPagination() {
         onChange={(e, pageToChange) => {
           if (page !== pageToChange) {
             dispatch(changePage(pageToChange))
-            dispatch(
-              fetchCharactersByParams({
-                page: pageToChange,
-                nameStartsWith: search
-              })
-            )
+            dispatch(fetchCharactersByParams())
           }
 
           scrollToTop()

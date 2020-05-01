@@ -8,12 +8,14 @@ export const fetchCharactersByParams = createAsyncThunk(
     if (loading !== 'pending' || requestId !== currentRequestId) {
       return
     }
-    const { page = 1, nameStartsWith } = params
-
+    const {
+      pagination: { page },
+      search: { search }
+    } = getState()
     const offset = 20 * page - 20
     const response = await fetch(
       `${GET_CHARACTERS_API_URL}&limit=20&offset=${offset}${
-        nameStartsWith ? `&nameStartsWith=${nameStartsWith}` : ''
+        search ? `&nameStartsWith=${search}` : ''
       }`
     )
     const json = await response.json()

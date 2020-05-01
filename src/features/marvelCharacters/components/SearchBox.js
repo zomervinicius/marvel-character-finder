@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useDebounce } from 'use-debounce'
 import { fetchCharactersByParams } from '../slices/CharactersSlice'
+import { resetPagination } from '../slices/PaginationSlice'
 import { selectSearch, setSearchValue } from '../slices/SearchSlice'
 
 const useStyles = makeStyles((theme) => ({
@@ -55,11 +56,8 @@ export default function SearchBox() {
   const dispatch = useDispatch()
   const [debouncedSearch] = useDebounce(search, 400)
   useEffect(() => {
-    dispatch(
-      fetchCharactersByParams({
-        nameStartsWith: search
-      })
-    )
+    dispatch(resetPagination())
+    dispatch(fetchCharactersByParams())
     // eslint-disable-next-line
   }, [debouncedSearch, dispatch])
   return (
