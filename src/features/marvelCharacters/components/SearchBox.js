@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { stringify } from 'query-string'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useDebounce } from 'use-debounce'
 import { fetchCharactersByParams } from '../slices/CharactersSlice'
-import { resetPagination } from '../slices/PaginationSlice'
-import { selectSearch, setSearchValue } from '../slices/SearchSlice'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,12 +52,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchBox() {
   const classes = useStyles()
-  const { search } = useSelector(selectSearch)
   const dispatch = useDispatch()
+  const location = useLocation()
+  const history = useHistory()
+  const params = new URLSearchParams(location.search)
+  const searchParam = stringify(params.get('search'))
+  const pageParamStringified = stringify(params.get('page'))
+  const page =
+    pageParamStringified && !isNaN(pageParamStringified)
+      ? pageParamStringified
+      : 1
+  const [search, setSearch] = useState(searchParam)
   const [debouncedSearch] = useDebounce(search, 400)
   useEffect(() => {
-    dispatch(resetPagination())
-    dispatch(fetchCharactersByParams())
+    history.push(`?page=${page}&search=${search}`)
+    dispatch(fetchCharactersByParams({ search, page }))
     // eslint-disable-next-line
   }, [debouncedSearch, dispatch])
   return (
@@ -67,7 +76,7 @@ export default function SearchBox() {
         value={search}
         className={classes.input}
         placeholder="Search the character..."
-        onChange={(e) => dispatch(setSearchValue(e.target.value))}
+        onChange={(e) => setSearch(e.target.value)}
       />
     </div>
   )
