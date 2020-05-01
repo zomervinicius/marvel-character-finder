@@ -125,7 +125,11 @@ export function CharacterDetailInfo({ characterInfo }) {
                 </Typography>
                 {characterInfo.series.items.length > 0 ? (
                   characterInfo.series.items.map((serie) => (
-                    <Typography gutterBottom variant="subtitle1">
+                    <Typography
+                      gutterBottom
+                      variant="subtitle1"
+                      key={serie.name}
+                    >
                       {serie.name}
                     </Typography>
                   ))
