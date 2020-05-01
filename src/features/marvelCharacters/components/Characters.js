@@ -25,7 +25,11 @@ export default function Characters() {
       />
     )
   }
-  if (!isObjEmpty(characters) && characters.results.length === 0) {
+  if (
+    characters &&
+    !isObjEmpty(characters) &&
+    characters.results.length === 0
+  ) {
     return (
       <CharactersError
         errorMessage="Oops, no character found, try again!"
@@ -33,7 +37,7 @@ export default function Characters() {
       />
     )
   }
-  if (!isObjEmpty(characters)) {
+  if (characters && !isObjEmpty(characters)) {
     return (
       <>
         <Grid container spacing={4}>

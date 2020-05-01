@@ -8,8 +8,8 @@ export const fetchCharactersByParams = createAsyncThunk(
     if (loading !== 'pending' || requestId !== currentRequestId) {
       return
     }
-    console.log(params)
     const { search, page } = params
+
     const offset = 20 * page - 20
     const response = await fetch(
       `${GET_CHARACTERS_API_URL}&limit=20&offset=${offset}${

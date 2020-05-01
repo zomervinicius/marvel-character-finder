@@ -9,8 +9,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { selectCharacter } from '../slices/CharacterSlice'
-import { resetPagination } from '../slices/PaginationSlice'
-import { resetSearch } from '../slices/SearchSlice'
 import CharacterCard from './CharacterCard'
 import { EditCharacterDialog } from './EditCharacterDialog'
 
@@ -96,8 +94,6 @@ export function CharacterDetailInfo({ characterInfo }) {
                   float: 'left'
                 }}
                 onClick={() => {
-                  dispatch(resetPagination())
-                  dispatch(resetSearch())
                   history.push('/')
                 }}
               >

@@ -9,12 +9,16 @@ import {
 } from '../slices/CharactersSlice'
 import { scrollToTop } from '../utilities'
 
+const queryString = require('query-string')
+
 export function CharacterPagination() {
   const dispatch = useDispatch()
   const { entities: characters } = useSelector(selectCharacters)
   const location = useLocation()
   const history = useHistory()
   const params = new URLSearchParams(location.search)
+  const parsedQueryString = queryString.parse(location.search)
+
   const page = Number(params.get('page'))
 
   const useStyles = makeStyles((theme) => ({
@@ -36,7 +40,7 @@ export function CharacterPagination() {
           if (page !== pageToChange) {
             params.set('page', pageToChange)
             history.push(`?${params.toString()}`)
-            dispatch(fetchCharactersByParams(params))
+            dispatch(fetchCharactersByParams(parsedQueryString))
           }
 
           scrollToTop()

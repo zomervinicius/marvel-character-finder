@@ -1,10 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles'
-import { stringify } from 'query-string'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useDebounce } from 'use-debounce'
 import { fetchCharactersByParams } from '../slices/CharactersSlice'
+
+const queryString = require('query-string')
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,20 +56,15 @@ export default function SearchBox() {
   const dispatch = useDispatch()
   const location = useLocation()
   const history = useHistory()
-  const params = new URLSearchParams(location.search)
-  const searchParam = stringify(params.get('search'))
-  const pageParamStringified = stringify(params.get('page'))
-  const page =
-    pageParamStringified && !isNaN(pageParamStringified)
-      ? pageParamStringified
-      : 1
-  const [search, setSearch] = useState(searchParam)
+  const parsedQueryString = queryString.parse(location.search)
+  const search = parsedQueryString.search || ''
+  const { page } = parsedQueryString
+  const pageFormatted = page && !isNaN(page) ? page : 1
   const [debouncedSearch] = useDebounce(search, 400)
   useEffect(() => {
-    history.push(`?page=${page}&search=${search}`)
-    dispatch(fetchCharactersByParams({ search, page }))
+    dispatch(fetchCharactersByParams(parsedQueryString))
     // eslint-disable-next-line
-  }, [debouncedSearch, dispatch])
+  }, [debouncedSearch, dispatch, page, history])
   return (
     <div className={classes.root}>
       <input
@@ -76,7 +72,13 @@ export default function SearchBox() {
         value={search}
         className={classes.input}
         placeholder="Search the character..."
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) =>
+          history.push(
+            search
+              ? `?page=1&search=${e.target.value}`
+              : `?page=${pageFormatted}&search=${e.target.value}`
+          )
+        }
       />
     </div>
   )
