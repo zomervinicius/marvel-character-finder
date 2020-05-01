@@ -21,7 +21,7 @@ export const fetchCharactersByParams = createAsyncThunk(
   }
 )
 
-export const charactersSlice = createSlice({
+export const allCharactersSlice = createSlice({
   name: 'characters',
   initialState: {
     entities: {},
@@ -59,4 +59,4 @@ export const charactersSlice = createSlice({
 
 export const selectCharacters = (state) => state.characters
 
-export default charactersSlice.reducer
+export default allCharactersSlice.reducer

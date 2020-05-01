@@ -6,7 +6,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 import {
   fetchCharactersByParams,
   selectCharacters
-} from '../slices/CharactersSlice'
+} from '../slices/allCharactersSlice'
 import { scrollToTop } from '../utilities'
 
 const queryString = require('query-string')

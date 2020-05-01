@@ -15,7 +15,7 @@ export const fetchCharacterById = createAsyncThunk(
   }
 )
 
-export const characterSlice = createSlice({
+export const characterDetailSlice = createSlice({
   name: 'character',
   initialState: {
     entities: {},
@@ -53,4 +53,4 @@ export const characterSlice = createSlice({
 
 export const selectCharacter = (state) => state.character
 
-export default characterSlice.reducer
+export default characterDetailSlice.reducer

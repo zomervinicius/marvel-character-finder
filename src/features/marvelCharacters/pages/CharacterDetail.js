@@ -5,7 +5,10 @@ import { useHistory } from 'react-router-dom'
 import { CharacterDetailInfo } from '../components/CharacterDetailInfo'
 import { CharacterDetailSkeleton } from '../components/CharacterDetailSkeleton'
 import { CharactersError } from '../components/CharactersError'
-import { fetchCharacterById, selectCharacter } from '../slices/CharacterSlice'
+import {
+  fetchCharacterById,
+  selectCharacter
+} from '../slices/characterDetailSlice'
 import { isObjEmpty, scrollToTop } from '../utilities'
 
 export default function CharacterDetail() {
