@@ -4,14 +4,12 @@ import { GET_CHARACTERS_API_URL } from '../services/index'
 export const fetchCharactersByParams = createAsyncThunk(
   'charactersByParams/fetchByIdStatus',
   async (params, { getState, requestId }) => {
-    const { currentRequestId, loading } = getState().characters
+    const { currentRequestId, loading } = getState().allCharacters
     if (loading !== 'pending' || requestId !== currentRequestId) {
       return
     }
-    const {
-      pagination: { page },
-      search: { search }
-    } = getState()
+    const { search, page } = params
+
     const offset = 20 * page - 20
     const response = await fetch(
       `${GET_CHARACTERS_API_URL}&limit=20&offset=${offset}${
@@ -23,7 +21,7 @@ export const fetchCharactersByParams = createAsyncThunk(
   }
 )
 
-export const charactersSlice = createSlice({
+export const allCharactersSlice = createSlice({
   name: 'characters',
   initialState: {
     entities: {},
@@ -59,6 +57,6 @@ export const charactersSlice = createSlice({
   }
 })
 
-export const selectCharacters = (state) => state.characters
+export const selectAllCharacters = (state) => state.allCharacters
 
-export default charactersSlice.reducer
+export default allCharactersSlice.reducer

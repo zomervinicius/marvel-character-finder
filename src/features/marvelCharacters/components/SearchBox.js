@@ -1,10 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles'
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useDebounce } from 'use-debounce'
-import { fetchCharactersByParams } from '../slices/CharactersSlice'
-import { resetPagination } from '../slices/PaginationSlice'
-import { selectSearch, setSearchValue } from '../slices/SearchSlice'
+import { fetchCharactersByParams } from '../slices/allCharactersSlice'
+
+const queryString = require('query-string')
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,14 +53,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchBox() {
   const classes = useStyles()
-  const { search } = useSelector(selectSearch)
   const dispatch = useDispatch()
+  const location = useLocation()
+  const history = useHistory()
+  const parsedQueryString = queryString.parse(location.search)
+  const search = parsedQueryString.search || ''
+  const { page } = parsedQueryString
+  const pageFormatted = page && !isNaN(page) ? page : 1
   const [debouncedSearch] = useDebounce(search, 400)
   useEffect(() => {
-    dispatch(resetPagination())
-    dispatch(fetchCharactersByParams())
+    dispatch(fetchCharactersByParams(parsedQueryString))
     // eslint-disable-next-line
-  }, [debouncedSearch, dispatch])
+  }, [debouncedSearch, dispatch, page, history])
+
+  const writeQueryToUrl = (searchValue) =>
+    history.push(
+      searchValue
+        ? `?page=1&search=${searchValue}`
+        : `?page=${pageFormatted}&search=${searchValue}`
+    )
+
   return (
     <div className={classes.root}>
       <input
@@ -67,7 +80,7 @@ export default function SearchBox() {
         value={search}
         className={classes.input}
         placeholder="Search the character..."
-        onChange={(e) => dispatch(setSearchValue(e.target.value))}
+        onChange={(e) => writeQueryToUrl(e.target.value)}
       />
     </div>
   )

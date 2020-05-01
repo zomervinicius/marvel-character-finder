@@ -4,7 +4,7 @@ import { GET_CHARACTER_BY_ID_API_URL } from '../services'
 export const fetchCharacterById = createAsyncThunk(
   'characterById/fetchByIdStatus',
   async (charId, { getState, requestId }) => {
-    const { currentRequestId, loading } = getState().character
+    const { currentRequestId, loading } = getState().characterDetail
     if (loading !== 'pending' || requestId !== currentRequestId) {
       return
     }
@@ -15,7 +15,7 @@ export const fetchCharacterById = createAsyncThunk(
   }
 )
 
-export const characterSlice = createSlice({
+export const characterDetailSlice = createSlice({
   name: 'character',
   initialState: {
     entities: {},
@@ -51,6 +51,6 @@ export const characterSlice = createSlice({
   }
 })
 
-export const selectCharacter = (state) => state.character
+export const selectCharacterDetail = (state) => state.characterDetail
 
-export default characterSlice.reducer
+export default characterDetailSlice.reducer

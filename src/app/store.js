@@ -1,14 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import characterReducer from '../features/marvelCharacters/slices/CharacterSlice'
-import charactersReducer from '../features/marvelCharacters/slices/CharactersSlice'
-import paginationReducer from '../features/marvelCharacters/slices/PaginationSlice'
-import searchReducer from '../features/marvelCharacters/slices/SearchSlice'
+import allCharactersReducer from '../features/marvelCharacters/slices/allCharactersSlice'
+import characterDetailReducer from '../features/marvelCharacters/slices/characterDetailSlice'
 
 export default configureStore({
   reducer: {
-    characters: charactersReducer,
-    character: characterReducer,
-    pagination: paginationReducer,
-    search: searchReducer
+    allCharacters: allCharactersReducer,
+    characterDetail: characterDetailReducer
   }
 })
