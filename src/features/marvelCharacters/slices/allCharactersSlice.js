@@ -4,7 +4,7 @@ import { GET_CHARACTERS_API_URL } from '../services/index'
 export const fetchCharactersByParams = createAsyncThunk(
   'charactersByParams/fetchByIdStatus',
   async (params, { getState, requestId }) => {
-    const { currentRequestId, loading } = getState().characters
+    const { currentRequestId, loading } = getState().allCharacters
     if (loading !== 'pending' || requestId !== currentRequestId) {
       return
     }
@@ -57,6 +57,6 @@ export const allCharactersSlice = createSlice({
   }
 })
 
-export const selectCharacters = (state) => state.characters
+export const selectAllCharacters = (state) => state.allCharacters
 
 export default allCharactersSlice.reducer

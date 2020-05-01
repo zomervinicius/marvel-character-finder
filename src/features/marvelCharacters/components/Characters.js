@@ -3,7 +3,7 @@ import apiErrorImage from 'assets/images/marvel-api-error.jpg'
 import marvelCharNotFound from 'assets/images/marvel-char-not-found.jpg'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { selectCharacters } from '../slices/allCharactersSlice'
+import { selectAllCharacters } from '../slices/allCharactersSlice'
 import { isObjEmpty } from '../utilities'
 import CharacterCard from './CharacterCard'
 import { CharacterPagination } from './CharacterPagination'
@@ -11,7 +11,9 @@ import { CharactersError } from './CharactersError'
 import CharacterSkeleton from './CharacterSkeleton'
 
 export default function Characters() {
-  const { entities: characters, loading, error } = useSelector(selectCharacters)
+  const { entities: characters, loading, error } = useSelector(
+    selectAllCharacters
+  )
 
   if (loading === 'pending') {
     return <CharacterSkeleton />

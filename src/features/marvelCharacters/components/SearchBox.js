@@ -65,6 +65,14 @@ export default function SearchBox() {
     dispatch(fetchCharactersByParams(parsedQueryString))
     // eslint-disable-next-line
   }, [debouncedSearch, dispatch, page, history])
+
+  const writeQueryToUrl = (searchValue) =>
+    history.push(
+      searchValue
+        ? `?page=1&search=${searchValue}`
+        : `?page=${pageFormatted}&search=${searchValue}`
+    )
+
   return (
     <div className={classes.root}>
       <input
@@ -72,13 +80,7 @@ export default function SearchBox() {
         value={search}
         className={classes.input}
         placeholder="Search the character..."
-        onChange={(e) =>
-          history.push(
-            search
-              ? `?page=1&search=${e.target.value}`
-              : `?page=${pageFormatted}&search=${e.target.value}`
-          )
-        }
+        onChange={(e) => writeQueryToUrl(e.target.value)}
       />
     </div>
   )

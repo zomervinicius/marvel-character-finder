@@ -7,7 +7,7 @@ import { CharacterDetailSkeleton } from '../components/CharacterDetailSkeleton'
 import { CharactersError } from '../components/CharactersError'
 import {
   fetchCharacterById,
-  selectCharacter
+  selectCharacterDetail
 } from '../slices/characterDetailSlice'
 import { isObjEmpty, scrollToTop } from '../utilities'
 
@@ -15,7 +15,9 @@ export default function CharacterDetail() {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const { entities: character, loading, error } = useSelector(selectCharacter)
+  const { entities: character, loading, error } = useSelector(
+    selectCharacterDetail
+  )
   const getCharacterIdInURL = () => {
     const splittedPathname = history.location.pathname.split('/detail/')
     const id = splittedPathname[1]

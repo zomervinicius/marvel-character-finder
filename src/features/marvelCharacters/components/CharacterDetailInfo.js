@@ -8,7 +8,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { selectCharacter } from '../slices/characterDetailSlice'
+import { selectCharacterDetail } from '../slices/characterDetailSlice'
 import CharacterCard from './CharacterCard'
 import { EditCharacterDialog } from './EditCharacterDialog'
 
@@ -38,7 +38,7 @@ export function CharacterDetailInfo({ characterInfo }) {
   const theme = useTheme()
   const history = useHistory()
   const isExtraSmallScreen = useMediaQuery(theme.breakpoints.down('xs'))
-  const { entities: character } = useSelector(selectCharacter)
+  const { entities: character } = useSelector(selectCharacterDetail)
   const [open, setOpen] = useState(false)
   const [characterName, setCharacterName] = useState('')
 

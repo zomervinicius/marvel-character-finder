@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import {
   fetchCharactersByParams,
-  selectCharacters
+  selectAllCharacters
 } from '../slices/allCharactersSlice'
 import { scrollToTop } from '../utilities'
 
@@ -13,7 +13,7 @@ const queryString = require('query-string')
 
 export function CharacterPagination() {
   const dispatch = useDispatch()
-  const { entities: characters } = useSelector(selectCharacters)
+  const { entities: characters } = useSelector(selectAllCharacters)
   const location = useLocation()
   const history = useHistory()
   const params = new URLSearchParams(location.search)
