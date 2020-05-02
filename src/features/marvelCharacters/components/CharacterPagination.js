@@ -1,23 +1,16 @@
 import { makeStyles } from '@material-ui/core/styles'
 import Pagination from '@material-ui/lab/Pagination'
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
-import {
-  fetchCharactersByParams,
-  selectAllCharacters
-} from '../slices/allCharactersSlice'
+import { selectAllCharacters } from '../slices/allCharactersSlice'
 import { scrollToTop } from '../utilities'
 
-const queryString = require('query-string')
-
 export function CharacterPagination() {
-  const dispatch = useDispatch()
   const { entities: characters } = useSelector(selectAllCharacters)
   const location = useLocation()
   const history = useHistory()
   const params = new URLSearchParams(location.search)
-  const parsedQueryString = queryString.parse(location.search)
 
   const page = Number(params.get('page'))
 
@@ -40,9 +33,7 @@ export function CharacterPagination() {
           if (page !== pageToChange) {
             params.set('page', pageToChange)
             history.push(`?${params.toString()}`)
-            dispatch(fetchCharactersByParams(parsedQueryString))
           }
-
           scrollToTop()
         }}
         page={page}

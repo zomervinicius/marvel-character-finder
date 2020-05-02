@@ -61,17 +61,20 @@ export default function SearchBox() {
   const { page } = parsedQueryString
   const pageFormatted = page && !isNaN(page) ? page : 1
   const [debouncedSearch] = useDebounce(search, 400)
+
   useEffect(() => {
     dispatch(fetchCharactersByParams(parsedQueryString))
     // eslint-disable-next-line
   }, [debouncedSearch, dispatch, page, history])
 
-  const writeQueryToUrl = (searchValue) =>
+  const writeQueryToUrl = (searchValue) => {
+    const encodedString = encodeURI(searchValue)
     history.push(
-      searchValue
-        ? `?page=1&search=${searchValue}`
-        : `?page=${pageFormatted}&search=${searchValue}`
+      encodedString
+        ? `?page=1&search=${encodedString}`
+        : `?page=${pageFormatted}&search=${encodedString}`
     )
+  }
 
   return (
     <div className={classes.root}>
