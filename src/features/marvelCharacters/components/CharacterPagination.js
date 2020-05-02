@@ -36,7 +36,7 @@ export function CharacterPagination() {
           }
           scrollToTop()
         }}
-        page={page}
+        page={page || 1}
       />
     </div>
   )
