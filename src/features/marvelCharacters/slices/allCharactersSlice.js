@@ -10,10 +10,13 @@ export const fetchCharactersByParams = createAsyncThunk(
     }
     const { search, page } = params
 
-    const offset = 20 * page - 20
+    const decodedSearch = search ? decodeURI(search) : ''
+    const defaultPageValue = page || 1
+
+    const offset = 20 * defaultPageValue - 20
     const response = await fetch(
       `${GET_CHARACTERS_API_URL}&limit=20&offset=${offset}${
-        search ? `&nameStartsWith=${search}` : ''
+        decodedSearch ? `&nameStartsWith=${decodedSearch}` : ''
       }`
     )
     const json = await response.json()
