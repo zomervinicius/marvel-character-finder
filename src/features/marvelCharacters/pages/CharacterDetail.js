@@ -9,7 +9,7 @@ import {
   fetchCharacterById,
   selectCharacterDetail
 } from '../slices/characterDetailSlice'
-import { isObjEmpty, scrollToTop } from '../utilities'
+import { isObjEmpty, scrollToTop } from '../utils'
 
 export default function CharacterDetail() {
   const dispatch = useDispatch()

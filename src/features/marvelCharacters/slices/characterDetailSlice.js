@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
 import { GET_CHARACTER_BY_ID_API_URL } from '../services'
 
 export const fetchCharacterById = createAsyncThunk(
@@ -9,20 +10,22 @@ export const fetchCharacterById = createAsyncThunk(
       return
     }
 
-    const response = await fetch(GET_CHARACTER_BY_ID_API_URL(charId))
-    const json = await response.json()
-    return json
+    const response = await axios.get(GET_CHARACTER_BY_ID_API_URL(charId))
+    const { data } = response
+    return data
   }
 )
 
+export const initialState = {
+  entities: {},
+  loading: 'idle',
+  currentRequestId: undefined,
+  error: null
+}
+
 export const characterDetailSlice = createSlice({
   name: 'character',
-  initialState: {
-    entities: {},
-    loading: 'idle',
-    currentRequestId: undefined,
-    error: null
-  },
+  initialState,
   reducers: {},
   extraReducers: {
     [fetchCharacterById.pending]: (state, action) => {

@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
 import { GET_CHARACTERS_API_URL } from '../services/index'
 
 export const fetchCharactersByParams = createAsyncThunk(
@@ -14,24 +15,27 @@ export const fetchCharactersByParams = createAsyncThunk(
     const defaultPageValue = page || 1
 
     const offset = 20 * defaultPageValue - 20
-    const response = await fetch(
+    const response = await axios.get(
       `${GET_CHARACTERS_API_URL}&limit=20&offset=${offset}${
         decodedSearch ? `&nameStartsWith=${decodedSearch}` : ''
       }`
     )
-    const json = await response.json()
-    return json
+    const { data } = response
+
+    return data
   }
 )
 
+export const initialState = {
+  entities: {},
+  loading: 'idle',
+  currentRequestId: undefined,
+  error: null
+}
+
 export const allCharactersSlice = createSlice({
   name: 'characters',
-  initialState: {
-    entities: {},
-    loading: 'idle',
-    currentRequestId: undefined,
-    error: null
-  },
+  initialState,
   reducers: {},
   extraReducers: {
     [fetchCharactersByParams.pending]: (state, action) => {
@@ -42,6 +46,7 @@ export const allCharactersSlice = createSlice({
     },
     [fetchCharactersByParams.fulfilled]: (state, action) => {
       const { requestId } = action.meta
+
       if (state.loading === 'pending' && state.currentRequestId === requestId) {
         state.loading = 'idle'
         state.entities = action.payload.data

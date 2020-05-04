@@ -1,11 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles'
+import queryString from 'query-string'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useDebounce } from 'use-debounce'
 import { fetchCharactersByParams } from '../slices/allCharactersSlice'
-
-const queryString = require('query-string')
 
 const useStyles = makeStyles((theme) => ({
   root: {

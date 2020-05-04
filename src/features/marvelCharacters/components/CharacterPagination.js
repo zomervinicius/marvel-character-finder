@@ -4,7 +4,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { selectAllCharacters } from '../slices/allCharactersSlice'
-import { scrollToTop } from '../utilities'
+import { scrollToTop } from '../utils'
 
 export function CharacterPagination() {
   const { entities: characters } = useSelector(selectAllCharacters)
