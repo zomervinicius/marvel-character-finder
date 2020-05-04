@@ -12,6 +12,12 @@
 
 - React Testing Library;
 
+## Funcionalidades adicionais:
+
+- Adicionado paginação;
+
+- Adicionado parâmetros de paginação e pesquisa na URL.
+
 ## Funcionalidades esperadas:
 
 - Crie uma lista de cards para exibir os personagens mostrando a imagem e o nome; Feito
