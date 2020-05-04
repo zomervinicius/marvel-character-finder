@@ -1,32 +1,42 @@
 # Challenge
 
+## Tecnologias usadas:
+
+- Redux Toolkit; 
+
+- Material-UI;
+
+- Axios; 
+
+- Create React App;
+
+- React Testing Library;
+
 ## Funcionalidades esperadas:
 
-- Crie uma lista de cards para exibir os personagens mostrando a imagem e o nome;
+- Crie uma lista de cards para exibir os personagens mostrando a imagem e o nome; Feito
 
-- Possibilite o usuário buscar personagens;
+- Possibilite o usuário buscar personagens; Feito
 
-- Na lista o usuário pode ir para a página de detalhes do personagem e ver a lista de series dele;
+- Na lista o usuário pode ir para a página de detalhes do personagem e ver a lista de series dele; Feito
 
-- Crie um formulário para editar um personagem Marvel (salvando apenas no client-side);
+- Crie um formulário para editar um personagem Marvel (salvando apenas no client-side); Feito
 
 ## Restrições técnicas:
 
-- Utilize o create-react-app como base;
+- Utilize o create-react-app como base; Feito 
 
-- Utilize redux para gerenciar o estado;
+- Utilize redux para gerenciar o estado; Feito 
 
-- Utilize react-router para trocar de página;
+- Utilize react-router para trocar de página; Feito 
 
-- Utilize @testing-library/react para testes;
+- Utilize @testing-library/react para testes; Feito 
 
 ## Diferencial:
 
-- Crie uma pipeline no GitLab; (Exemplo: build => test => deploy);
+- Crie uma pipeline no GitLab; (Exemplo: build => test => deploy); N feito
 
-- Substituir o redux pelo Local state management do Apollo Client (caso esteja utilizando a MarvelQL);
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+- Substituir o redux pelo Local state management do Apollo Client (caso esteja utilizando a MarvelQL); Não estava funcionando a MarvelQL
 
 ## Available Scripts
 
